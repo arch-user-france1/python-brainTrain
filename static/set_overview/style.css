@@ -1,0 +1,193 @@
+html {
+    background-color: #0A092D;
+    height: 100%;
+    width: 100%;
+    opacity: 1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed !important;
+}
+body {
+    color: white;
+    transition: .2s;
+}
+h1 {
+    color: #D9DDE8;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+#first-settings-div {
+    width: 100%;
+    margin-top: 7%;
+}
+
+.settings-unit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 4rem;
+    border-top: 4px solid #2F486F;
+    border-bottom: 4px solid #2F486F;
+    padding: 1rem;
+}
+.button {
+  border: none;
+  border-radius: .25rem;
+  outline: none;
+  color: #000;
+  cursor: pointer;
+  background-color: #1EC8C2;
+  transition: .2s;
+}
+.button:hover {
+  background-color: #68E8E4;
+}
+
+.loader {
+  border: .2rem solid #f3f3f3;
+  border-radius: 50%;
+  border-top: .2rem solid #636363;
+  width: 1rem;
+  height: 1rem;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); border-radius: 50%;}
+  100% { transform: rotate(360deg); border-radius: 100%;}
+}
+
+.slider {
+  appearance: none;
+  width: 10% !important;
+  height: 10px;
+  background: #2E2E2E;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity .3s;
+  border-radius: .25rem;
+  transition: .5s;
+}
+
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #AABCD2;
+  cursor: pointer;
+  border: none;
+  transition: .5s;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #AABCD2;
+  cursor: pointer;
+  border: none;
+  transition: .5s;
+}
+
+
+
+
+
+#basic {
+
+}
+
+#title {
+    text-align: center;
+}
+
+#basic-options {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: row;
+}
+.basic-option {
+    background-color: #2E3856;
+    outline: none;
+    border: none;
+
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    font-size: 1.1rem;
+    line-height: 1.5;
+
+    padding: 6px 20px;
+    padding-right: 40px;
+    border-bottom: 3px solid #555577;
+    border-radius: .25rem;
+    margin-right: 1.5rem;
+
+    transition: .1s;
+}
+.basic-option:hover {
+    border-bottom: 3px solid #7E88A9;
+}
+#delete {
+    margin-right: 0;
+}
+.optionicon {
+    margin-right: 5px;
+    font-size: 1.4rem;
+}
+
+#folders {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.folder-button {
+  display: flex;
+  align-items: center;
+  border: none;
+  font-family: Ubuntu;
+  font-size: 13.3333px;
+  font-weight: 500;
+  margin: 1rem;
+  padding: .5rem;
+  background: #0A092D !important;
+  opacity: 1;
+  transition: .5s;
+  cursor: pointer;
+}
+.folder-icon {
+  color: #3489AE;
+  margin-right: 3px;
+}
+.folder-text {
+  color: #3489AE;
+  margin-right: 5px;
+}
+.folder-remove {
+  padding: 2px;
+  color: #3489AE;
+  transition: .4s;
+  cursor: pointer;
+}
+.folder-remove:hover {
+  color: #F06A6F;
+}
+
+#folders-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.folders-addnew {
+  color: #3489AE;
+  background-color: #0A092D !important;
+  border: none;
+  font-size: 2rem;
+}

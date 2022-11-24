@@ -1,0 +1,102 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>brainTrain</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/customScrollbar.css" rel="stylesheet">
+        <style>
+         html {
+             scrollbar-width: thin;
+         }
+         body{
+             background-color: #0A092D;
+         }
+         h1{text-align: center; color: white;}
+         #window {
+             padding: 2rem;
+             border-radius: 0.5rem;
+             background-color: #2E3856;
+             height: 370px;
+             width: 400px;
+             margin: auto;
+         }
+
+         #fieldDefinition {
+             min-height: 15.5rem;
+         }
+         #answ {
+             background-color: #646F90;
+             border: 3px solid #646F90;
+             /*border: 3px solid #7AD8FF;*/
+             border-radius: 0.5rem;
+             margin: auto;
+             outline: none;
+             -webkit-transition: 1s;
+             transition: 1s;
+             width: 100%;
+             height: 2rem;
+             color: #9F149F;
+         }
+         #answ:hover {
+             border: 3px solid #B94B96;
+             background-color: #6F65CB;
+         }
+         #answ:focus{
+             border: 3px solid #7AD8FF;
+             background-color: #91A4E0;
+         }
+         #def1 {
+             font-size: 200%;
+             color: #3E9127;
+         }
+         center-container {
+             margin: auto;
+             width: 350px;
+             height: 200px;
+             display: flex;
+             align-content: center;
+         }
+         #correctans {
+             opacity: 0;
+             transition: 0.7s;
+         }
+         #correctButton {
+             opacity: 0;
+             transition-duration: 1s;
+             transition-delay: 0.3s;
+             color: #FF655C;
+             background-color: #5CF6FF;
+             border: 3px solid #00BCC7;
+             padding: 0.5rem;
+         }
+         #correctButton:hover {
+             background-color: #FF655C;
+             color: #5CF6FF;
+         }
+        </style>
+    </head>
+    <body>
+        <div>
+            <h1 id="setNameH"  style="color: #76768F;">{{setName}}</h1>
+        </div>
+
+        <div class="center-container">
+            <div id="window" style="height: 400px; width: 800px;">
+                <div id="fieldDefinition">
+                    <p id="def1">{{definition1}}</p>
+                </div>
+                <div style="margin: auto">
+                    <input autofocus autocomplete="off" spellcheck="false" id="answ">
+                    <script type="text/javascript" src="/static/inputfield.js"></script>
+                </div>
+                <div style="margin: auto">
+                    <p id="correctans">{{correctans}}</p>
+                    <button id="correctButton">answer is correct</button>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

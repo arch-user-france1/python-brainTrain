@@ -1,0 +1,15 @@
+.midnight {
+    background-color: #0A092D;
+}
+.navbarbuttons {
+    background-color: #4255ff;
+}
+.navbarbuttons:hover {
+    background-color: #004B94;
+}
+.elevated-1 {
+    background-color: #2E3856;
+}
+.borders-1-bottom {
+    border-bottom: 1px solid #5E6C92;
+}

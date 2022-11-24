@@ -1,0 +1,153 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>brainTrain</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script id="waitforjquery" src="/static/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+
+        <script src="/static/fadeInOnLoad.js"></script>
+        <script src="/static/modules/bfetch.js"></script>
+        <script src="/static/sw.js"></script>
+        <link href="/static/customScrollbar.css" rel="stylesheet">
+        <link href="/static/gradientBorder.css" rel="stylesheet">
+        <style>
+
+         @keyframes AnimationName {
+             0%{background-position:0% 15%}
+             50%{background-position:100% 86%}
+             100%{background-position:0% 15%}
+         }
+         @keyframes Background {
+             0%{background-color: #1fcf80}
+             25%{background-color: #1fbacf}
+             50%{background-color: #cf1fa5}
+             75%{background-color: #1fbacf}
+             100%{background-color: #1fcf80}
+         }
+
+
+         html {
+             height: 100%;
+             background: linear-gradient(110deg, #0A092D 90%, #2F0422);
+             background-repeat: no-repeat;
+             background-size: cover;
+             background-attachment: fixed;
+         }
+         body {
+             vertical-align: middle;
+             background-color: transparent;
+             opacity: 0;
+             transition: .4s;
+         }
+
+         #usernamediv {
+             display: inline;
+             padding: 0.6rem;
+             background-color: #2E4142;
+             position: relative;
+             left: 0rem;
+             right: 0rem;
+             width: 99%;
+             text-align: center;
+             border: 3px solid #2E4142;
+             transition-duration: 1s;
+         }
+         .sets {
+             text-decoration: none;
+             text-transform: uppercase;
+             background-image: linear-gradient(
+                 -225deg,
+                 #231557 0%,
+                 #44107a 29%,
+                 #ff1361 67%,
+                 #fff800 100%
+             );
+             background-size: auto auto;
+             background-clip: border-box;
+             background-size: 200% auto;
+             color: #fff;
+             background-clip: text;
+             text-fill-color: transparent;
+             -webkit-background-clip: text;
+             -webkit-text-fill-color: transparent;
+             display: inline-block;
+             animation: textclip 5s linear infinite;
+         }
+         @keyframes glowing {
+             0% { background-position: 0 0; }
+             50% { background-position: 400% 0; }
+             100% { background-position: 0 0; }
+         }
+         @keyframes textclip {
+             0% {background-position: 200% center;}
+             100% {background-position: 0% center;}
+         }
+
+
+         #options {
+             padding: 0.3rem;
+             margin: 0.5rem;
+             display: flex;
+         }
+         #setsfield {
+             padding-right: 3rem;
+         }
+
+         #dashboard {
+
+         }
+
+         .setcategories {
+             text-align: center;
+             margin-bottom: 2rem;
+         }
+         .setListField {
+             border-bottom: 1px solid #2E3856;
+             color: #FFF;
+
+             justify-content: center;
+
+             padding: 3rem;
+             padding-bottom: 5rem;
+
+             transition: .1s;
+         }
+         .setListSetsHolder {
+             display: flex;
+             flex-wrap: wrap;
+             justify-content: space-around;
+             align-content: center;
+         }
+         .setListButton {
+             background: #0A092D;
+             outline: none;
+             border: 1px solid #2E3856;
+             padding: .5rem;
+             margin: .5rem;
+             draggable: true;
+         }
+         .setListText {
+             color: #3489AE;
+         }
+        </style>
+    </head>
+    {% include "navigationbar.html" %}
+    <body>
+
+        <div id="dashboard">
+
+            <div id="all-sets" class="setListField">
+                <h2 class="setcategories">all sets</h2>
+                <div id="js-allsets" class="setListSetsHolder"></div>
+            </div>
+
+        </div>
+
+
+        <script src="/static/index2/main.js"></script>
+        <script src="/static/index2/listSets.js"></script>
+    </body>
+</html>

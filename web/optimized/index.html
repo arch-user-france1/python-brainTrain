@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>brainTrain</title>
+        <link href="/static/customScrollbar.css" rel="stylesheet">
+        <link href="/static/fonts.css" rel="stylesheet">
+        <link href="/static/colorCss.css" rel="stylesheet">
+        <script src="/static/modules/imageclient.js"></script>
+        <style>
+         html {
+             transition: .5s;
+             opacity: 1;
+             background: linear-gradient(0deg, #2E2E2E, #1C1C1C);
+             background-repeat: no-repeat !important;
+             background-attachment: fixed !important;
+             background-position: center !important;
+             background-size: cover !important;
+             padding: none;
+             margin: none;
+         }
+         body {
+             align-items: center;
+             opacity: 0;
+             background-color: transparent;
+             width: 100%;
+             height: 100%;
+             background-color: rgba(0,0,0, 0.4);
+             padding: none;
+             margin: 0 !important;
+             position: absolute;
+             top: 0;
+             left: 0;
+             right: 0;
+             bottom: 0;
+             overflow: hidden;
+         }
+
+
+         .text {
+             color: white;
+             overflow: hidden;
+         }
+         #title {
+             font-size: 400%;
+             font-family: "Monospace", Lucida Console, serif;
+             color: #9A62AE;
+         }
+
+         .startButtons{
+             border: none;
+             padding: 1.3rem;
+             border-radius: 1em;
+             text-align: center;
+             display: inline-block;
+             background-color: #2E2E2E;
+             border: 3px solid #2E3856;
+             transition: all 0.6s;
+             -moz-transition: all 0.6s;
+             -webkit-transition: all 0.6s;
+             -ms-transition: all 0.6s;
+             -o-transition: all 0.6s;
+             opacity: 1;
+         }
+         .startButtons span {
+             transition: 0.5s;
+         }
+         .startButtons span:after {
+             transition: all 1s;
+         }
+         .startButtons:hover{
+             background: #676B89;
+             background-size: 200%;
+             animation: glowing 15s linear infinite;
+             border: 3px solid #2F486F;
+             opacity: 1;
+             transition-delay: 0.2s
+         }
+         .startButtons:hover span {
+             opacity: 1;
+             color: #9D0551;
+             padding: 5px;
+         }
+
+         @keyframes gradient {
+             0% {
+                 background-position: 0% 50%;
+             }
+             50% {
+                 background-position: 100% 50%;
+             }
+             100% {
+                 background-position: 0% 50%;
+             }
+         }
+
+
+         @keyframes glowing {
+             0% { background-position: 0 0; }
+             100% { background-position: 400% 0; }
+         }
+         @keyframes backgroundgradient {
+             0% { background-position: 0% center; }
+             50% { background-position: 100% center; }
+             100% { background-position: 0% center; }
+         }
+         @keyframes glowing-with-reverse {
+             0% { background-position: 0 0; }
+             50% { background-position: 400% 0; }
+             100% { background-position: 0 0; }
+         }
+         @keyframes textclip {
+             0% {background-position: 200% center;}
+             50% {background-position: 0% center;}
+         }
+
+         h1 {text-align: center;}
+         p {text-align: center; overflow: hidden;}
+         div {text-align: center; overflow: hidden;}
+
+         #experimentalbg {
+             padding: 1rem;
+             overflow: hidden;
+             background: linear-gradient(45deg, #002bff, #7a00ff, #ff00c8, #7a00ff, #002bff);
+             background-size: 200%;
+             animation: glowing 20s linear infinite;
+             margin-bottom: 5rem;
+         }
+
+         #loginBtn {
+             padding: 0.3rem;
+             background-size: 800%;
+         }
+         #registerBtn {
+             padding: 0.3rem;
+             background-size: 800%;
+         }
+
+         #whatamI {
+             background-color: #1A1D28;
+         }
+         html {
+         }
+         @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+         p {
+             font-family: 'Montserrat', Helvetica, "Trebuchet MS", Verdana, sans-serif;
+         }
+
+         #picsumphoto {
+             position: absolute;
+             bottom: 1%;
+             right: 1%;
+         }
+         #nav {
+             background-color: rgba(0, 0, 0, .5);
+             color: #AABCD2;
+             display: flex;
+             align-items: center;
+             padding: .5rem;
+             border-radius: 1rem;
+             margin-top: .7rem;
+             margin-left: .5rem;
+             margin-right: .5rem;
+             margin-bottom: 1rem;
+
+             min-height: 31.6px;
+         }
+        </style>
+    </head>
+    <body>
+        <header id="nav">
+            <div>
+                <button class="startButtons elevated-2" id="loginBtn" onclick="location.href = '/login';">
+                    <span class="text-1">login</span></button>
+                <button class="startButtons elevated-2" id="registerBtn" onclick="location.href = '/register';">
+                    <span class="text-1">register</span></button>
+            </div>
+        </header>
+        <h1 id="title" class="brand" style="">brainTrain</h1>
+        <div id="experimentalbg" class="border-1-3px">
+            <!--<embed type="text/html" src="introduction">-->
+            <p style="font-family: 'Monospace', Lucida Console, serif; color: #aabcd2 !important;" class="text-1">
+                brainTrain is a replacement for Quizlet.<br>
+                brainTrain is <strong>experimental</strong>. Expect bugs and missing features.
+            </p>
+        </div>
+
+
+        <div id="picsumphoto" style="opacity: 0.2; font-size: 1.5rem;color: white; transition: 1s;">
+            <span>photo from </span>
+            <a href="https://picsum.photos" style="color: white;">
+                picsum.photos
+            </a>
+        </div>
+        <script>
+         setTimeout((() => {
+             document.getElementById("picsumphoto").style.opacity = 0
+         }), 2000)
+        </script>
+        <script>
+         indexedDB.deleteDatabase('store')
+        </script>
+    </body>
+</html>

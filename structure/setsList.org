@@ -1,0 +1,7 @@
+#+title: Sets List /getSets
+#+description: Web syntax for listing sets
+
+Call /getSets without any parameteres and receive a JSON response which contains the following
+
+* defaultSets: {[ Array ]}
+** currently an array containing all set names

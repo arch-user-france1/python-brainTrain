@@ -1,0 +1,31 @@
+<body>
+    <div id="navigationbar">
+        <div id="navigation-left">
+            <div style="padding-right: 1rem;">
+                <a class="brand" href="/">brainTrain</a>
+            </div>
+            <button id="create">
+                <span id="createText">CREATE &nbsp</span><i class="fa-solid fa-chevron-down"></i>
+            </button>
+        </div>
+
+        <div id="navigation-middle"> <!--Not set up yet -->
+        </div>
+
+        <div id="navigation-right">
+            <div style="display: grid">
+                <button id="avatar-button" class="avatar"/>
+                <img src="/static/images/avatars/test-cat.jpg" id="avatar-img" class="avatar"/>
+            </div>
+        </div>
+    </div>
+
+    <div id="createDropdown" style="opacity: 0; transition: 1s;">
+    </div>
+    <div id="avatarDropdown" style="opacity: 0; transition: 1s;">
+    </div>
+    <script src="/static/navigationbar/createButton.js" defer></script>
+    <script src="/static/navigationbar/avatar.js" defer></script>
+
+    <script src="/static/navigationbar/centerMiddle.js" defer></script>
+</body>

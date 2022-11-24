@@ -1,0 +1,17 @@
+#+title: Theme V1
+
+background: #0e0f0f; black
+elevated 1: #1C1C1C; almost black
+elevated 2: #2E2E2E; dark grey
+elevated 3: #636363; charcoal grey
+text 1: #aabcd2; (glowy) cloudy blue
+title strong: #9A62AE; (glowy)
+border 1: #31445c;
+border 2: #aabcd2; (glowy)
+
+interactive
+ ### hover ###
+hover  1: #676B89; blue/grey
+hover  2: #1EC8C2; (very bright)
+text   1: #9D0551; violet red
+border 1: #2564CA; light navyy blue

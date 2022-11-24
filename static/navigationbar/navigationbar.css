@@ -1,0 +1,114 @@
+.brand {
+    font-family: "Monospace", Lucida Console, serif;
+    color: #9A62AE;
+    text-decoration: none;
+}
+#create {
+    height: 2.2rem;
+    width: 6.5rem;
+    padding-left: 1em;
+    padding-right: 1em;
+    background-color:#4255FF;
+    border-radius: 0.25rem;
+    border: none;
+    transition-duration: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+#create:hover {
+    background-color:#004B94;
+}
+
+#createText {
+    color: #FFF;
+    opacity: 0.8;
+    font-size: 1em;
+}
+
+
+.avatar {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    background: transparent !important;
+}
+#avatar-button {
+    border: none;
+}
+#avatar-img {
+    border: none;
+    transition-duration: .3s;
+}
+#avatar-img:hover {
+    opacity: .7;
+}
+
+
+#navigationbar {
+    position: sticky;
+    left: 0;
+    right: 0;
+    top: 0;
+
+    z-index: 1;
+
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+
+    background-color: transparent;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #5E6C92;
+
+}
+
+
+#navigation-left {
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+#navigation-right {
+    display: flex;
+}
+
+.avatarBtns {
+    background-color: transparent;
+    border: none;
+    align-items: center;
+    transition-duration: .1s;
+    width: 100%;
+}
+.avatarBtns:hover {
+    background-color: #282E3E;
+}
+.avatarBtnTxts {
+    color: #D9DDE8;
+    opacity: 1;
+    font-size: 1em;
+}
+
+
+#navigation-middle {
+    margin: auto;
+    display: flex;
+    align-content: center;
+    vertical-align: middle;
+}
+
+
+
+#account-details {
+    border-bottom: 1px solid #555577;
+    display: flex;
+}
+
+#dropdown-username {
+    color: #D9DDE8;
+}

@@ -1,0 +1,34 @@
+.gradient-border {
+  --borderWidth: 3px;
+  background: #1D1F20;
+  position: relative;
+  border-radius: var(--borderWidth);
+}
+.gradient-border:after {
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--borderWidth));
+  left: calc(-1 * var(--borderWidth));
+  height: calc(100% + var(--borderWidth) * 2);
+  width: calc(100% + var(--borderWidth) * 2);
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+  border-radius: calc(2 * var(--borderWidth));
+  z-index: -1;
+  animation: animatedgradient 3s ease alternate infinite;
+  background-size: 300% 300%;
+}
+
+
+@keyframes animatedgradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImdyYWRpZW50Qm9yZGVyLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSIsImZpbGUiOiJvdXQuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmdyYWRpZW50LWJvcmRlciB7XG4gIC0tYm9yZGVyV2lkdGg6IDNweDtcbiAgYmFja2dyb3VuZDogIzFEMUYyMDtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICBib3JkZXItcmFkaXVzOiB2YXIoLS1ib3JkZXJXaWR0aCk7XG59XG4uZ3JhZGllbnQtYm9yZGVyOmFmdGVyIHtcbiAgY29udGVudDogJyc7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgdG9wOiBjYWxjKC0xICogdmFyKC0tYm9yZGVyV2lkdGgpKTtcbiAgbGVmdDogY2FsYygtMSAqIHZhcigtLWJvcmRlcldpZHRoKSk7XG4gIGhlaWdodDogY2FsYygxMDAlICsgdmFyKC0tYm9yZGVyV2lkdGgpICogMik7XG4gIHdpZHRoOiBjYWxjKDEwMCUgKyB2YXIoLS1ib3JkZXJXaWR0aCkgKiAyKTtcbiAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDYwZGVnLCAjZjc5NTMzLCAjZjM3MDU1LCAjZWY0ZTdiLCAjYTE2NmFiLCAjNTA3M2I4LCAjMTA5OGFkLCAjMDdiMzliLCAjNmZiYTgyKTtcbiAgYm9yZGVyLXJhZGl1czogY2FsYygyICogdmFyKC0tYm9yZGVyV2lkdGgpKTtcbiAgei1pbmRleDogLTE7XG4gIGFuaW1hdGlvbjogYW5pbWF0ZWRncmFkaWVudCAzcyBlYXNlIGFsdGVybmF0ZSBpbmZpbml0ZTtcbiAgYmFja2dyb3VuZC1zaXplOiAzMDAlIDMwMCU7XG59XG5cblxuQGtleWZyYW1lcyBhbmltYXRlZGdyYWRpZW50IHtcblx0MCUge1xuXHRcdGJhY2tncm91bmQtcG9zaXRpb246IDAlIDUwJTtcblx0fVxuXHQ1MCUge1xuXHRcdGJhY2tncm91bmQtcG9zaXRpb246IDEwMCUgNTAlO1xuXHR9XG5cdDEwMCUge1xuXHRcdGJhY2tncm91bmQtcG9zaXRpb246IDAlIDUwJTtcblx0fVxufVxuIl19 */

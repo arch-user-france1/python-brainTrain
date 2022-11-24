@@ -1,0 +1,11 @@
+#+title: Settings
+#+description: requests for changing settings
+
+* /settings (JSON, POST)
+** automatic synchronisation
+*** {'autosync': 'True|False'}
+**** {'success': [...], 'error': {...: reason}}
+***** reasons
+****** inavlidBoolean (not "True"/"False")
+****** invalidKey
+**** tooManyKeys (do not DoS)

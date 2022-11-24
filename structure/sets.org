@@ -1,0 +1,16 @@
+#+title: Sets
+#+description: Where and how sets are stored
+
+Note: everything is stored within "data/username/"
+
+* cards: all the set names with last-accessed
+** cards => names: the names
+
+* setName => set.json: the definitions (question, answer)
+* setName => data.json
+** counters (correct and wrong answers)
+*** {[definition]: counters: [x,y]} # x: correct answers, y: wrong answers
+** version (for synchronisation between devices)
+* setName => settings.json: settings
+** TODO when to stop asking a definition
+** TODO if to ask for answer or definition (reverse mode) or maybe both

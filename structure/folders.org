@@ -1,0 +1,17 @@
+#+title: Folders
+
+* create a folder
+** /folders/new POST (JSON)
+*** {name: name for the folder}
+
+* get folder list
+** /folders/all GET
+*** {foldername: array with sets in that folder}
+
+* add set to folder
+** /folders/addSet POST (JSON)
+*** {folder: folder name, set: set name}
+
+* remove set from folder
+** /folders/removeSet POST (JSON)
+*** {folder: folder name, set: set name}

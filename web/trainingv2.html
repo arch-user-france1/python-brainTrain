@@ -1,0 +1,188 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>brainTrain</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        {% include "main_html.html" %}
+        <style>
+         body{
+             background-color: #0A092D;
+             transition: .2s;
+             overflow-y: hidden; /* fix spacebar */
+             overflow-x: hidden; /**/
+         }
+         h1{text-align: center; color: white;}
+         #window {
+             padding: 2rem;
+             border-radius: 0.5rem;
+             background-color: #2E3856;
+             /*height: 370px;
+             width: 400px;*/
+             height: 40%;
+             width: 31.1%;
+             margin: auto;
+             transition-duration: 0.3s;
+         }
+
+
+         #fieldDefinition {
+             min-height: 15.5rem;
+             display: flex;
+         }
+         #answ, .answ {
+             opacity: 0;
+             background-color: #646F90;
+             border: 3px solid #646F90;
+             border-radius: 0.5rem;
+             margin: 3px;
+             outline: none;
+             transition-duration: 0.7s;
+             color: #9F149F;
+             z-index: 5;
+
+             position: absolute;
+             width: 794px;
+             /*width: 30.7%;*/
+             height: 2rem;
+         }
+         #answ:hover {
+             border: 3px solid #B94B96;
+         }
+         #answ:focus{
+             border: 3px solid #7AD8FF;
+             background-color: #91A4E0;
+         }
+         #def1 {
+             font-size: 200%;
+             color: #3E9127;
+             transition: 0.5s;
+         }
+         center-container {
+             margin: auto;
+             width: 350px;
+             height: 200px;
+             display: flex;
+             align-content: center;
+         }
+         #corransw {
+             transition: 0.3s;
+             pointer-events: none;
+
+             position: absolute;
+             top: 33rem;
+         }
+
+         #wrongAnswerNav {
+             position: relative;
+             top: -30px;
+             opacity: 0;
+             transition-delay: .2s;
+             transition-duration: .3s;
+         }
+         #youransweriswrong {
+             color: #A94245;
+             font-family: Sans;
+             font-weight: 700;
+         }
+
+
+         #correctButton {
+             background-color: transparent;
+             border: none;
+             padding: 0;
+             pointer-events: none;
+         }
+         #correctButtonText {
+             color: #1E77C8;
+             text-decoration: underline;
+             transition-duration: .25s;
+             transition-delay: 0.1s;
+             cursor: pointer;
+         }
+         #correctButtonText:hover {
+             color: #1E51C8;
+         }
+
+
+         .correctAnswers {
+             background-color: #646F90;
+             border: 3px solid #42E240;
+             border-radius: 0.5rem;
+             margin: 3px;
+             outline: none;
+             transition: 1s ease-in-out;
+             width: 100%;
+             height: 2rem;
+             color: #9F149F;
+             z-index: 99;
+         }
+         .wrongAnswers {
+             background-color: #646F90;
+             border: 3px solid #C81E23;
+             border-radius: 0.5rem;
+             margin: 3px;
+             outline: none;
+             transition: 1s ease-in-out;
+             width: 100%;
+             height: 2rem;
+             color: #1EC8C2;
+             z-index: 99;
+         }
+         .correctAnswers:hover {
+             opacity: 1 !important;
+         }
+
+
+
+         .settingsBtn {
+             border: none;
+             outline: none;
+             background-color: transparent;
+             margin: 1rem;
+             text-align: center;
+             opacity: 0;
+             color: #FFF;
+
+             transition: opacity 1s .7s, color .3s;
+         }
+         .settingsBtnEnabled {
+             color: #6072AA !important;
+         }
+
+         #settings-expanded-window {
+             transition: 1s;
+         }
+        </style>
+    </head>
+    <body>
+        {% include "navigationbar.html" %}
+
+        <div>
+            <h1 id="setNameH"  style="color: #76768F;">{{setName}}</h1>
+        </div>
+
+        <div class="center-container">
+            <div id="window" style="height: 400px; width: 800px;">
+                <div id="fieldDefinition">
+                    <p id="def1"/>
+                    <p id="reliability"/>
+                </div>
+                <input id="corransw" class="answ">
+                <div id="ansfld">
+                    <input autofocus autocomplete="off" onpaste="return false;" spellcheck="false" id="answ">
+                </div>
+                <div style="display: flex; justify-content: space-between;" id="wrongAnswerNav">
+                    <span id="youransweriswrong">your answer is wrong</span>
+                    <button id="correctButton">
+                        <a id="correctButtonText">answer is correct</a>
+                    </button>
+                </div>
+                <div id="history"></div>
+            </div>
+        </div>
+        <script type="text/javascript" src="/static/training/main.js"></script>
+    </body>
+</html>

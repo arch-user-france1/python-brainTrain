@@ -1,0 +1,69 @@
+#sync-btn {
+    color: #FFF;
+    border: none;
+    background-color: transparent;
+    outline: none;
+
+    transition: 0.3s;
+}
+#sync-btn:hover {
+    animation: 1.3s cubic-bezier(.68,-0.55,.27,1.55) 0s 1 normal backwards running syncing;
+}
+
+#settings-btn {
+    color: #FFF;
+    border: none;
+    background-color: transparent;
+    outline: none;
+
+    transition: .3s;
+}
+
+@keyframes syncing {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    transition 1s ease-in;
+    z-index: 100;
+}
+
+#settings-win {
+    position: absolute;
+    top: 0;
+    left: 30%;
+    right: 30%;
+
+    background-color: #2E3856;
+    display: flex;
+
+    transition: 1s ease-in;
+    z-index: 101;
+}
+#settings-bar {
+    border-bottom: 2px solid #FFF;
+    display: flex;
+}
+
+#settings-close {
+    color: #FFF;
+    border: none;
+    background-color: transparent;
+    position: sticky;
+    right: 0;
+}
+
+#setting-btn-bar {
+    border-right: 1px solid #FFF;
+}

@@ -1,0 +1,8 @@
+html {
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+    background-position: center !important;
+    background-size: cover !important;
+    padding: none;
+    margin: none;
+}

@@ -1,0 +1,15 @@
+#+title: set_update
+#+description: The set_update syntax
+
+
+§§§
+outdated
+§§§
+
+* setName
+* definitions
+** dict: {definition: [x,y], ...}
+** x: correct answers (it adds the number to the one in the set)
+** y: wrong answers (same as above)
+** currently does not ensure that numbers aren't negative!
+* username

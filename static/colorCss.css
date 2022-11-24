@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.background {
+    background-color: #0e0f0f;
+}
+.elevated-1 {
+    background-color: #1C1C1C;
+}
+.elevated-2 {
+    background-color: #2E2E2E;
+}
+.elevated-3 {
+    background-color: #636363;
+}
+
+.text-1 {
+    color: #aabcd2;
+}
+.border-1-3px {
+    border: 3px solid #31445c;
+}
+.border-1-1px {
+    border: 1px solid #31445c;
+}
+.border-1 {
+    border-color: #aabcd2;
+}
+
+.text-1-hover {
+    color: #9D0551;
+}
+.border-1-hover {
+    color: #2564CA;
+}
+
+.brand {
+    font-size: 400%;
+    font-family: "Monospace", Lucida Console, serif;
+    color: #9A62AE;
+}
+
+.title-strong {
+    color: #9A62AE;
+}

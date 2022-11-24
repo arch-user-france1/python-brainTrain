@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>{{setName}} - brainTrain</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/set_overview/style.css" rel="stylesheet">
+        <script src="/static/fadeInOnLoad.js"></script>
+        <script src="/static/modules/delay.js"></script>
+        <script src="/static/modules/bfetch.js"></script>
+    </head>
+    {% include "navigationbar.html"  %}
+    <body>
+        <div id="basic">
+            <h1 id="title">{{setName}}</h1>
+            <div id="basic-options">
+                <button id="edit" class="basic-option">
+                    <i class="fa-solid fa-pen optionicon"></i>
+                        <p class="no-margin">edit</p>
+                </button>
+                <button id="train" class="basic-option">
+                    <i class="fa-solid fa-play optionicon"></i>
+                    <p class="no-margin">train</p>
+                </button>
+                <button id="share" class="basic-option">
+                    <i class="fa-solid fa-share-nodes optionicon"></i>
+                    <p class="no-margin">share</p>
+                </button>
+                <button id="delete" class="basic-option">
+                    <i class="fa-solid fa-trash optionicon"></i>
+                    <p class="no-margin">delete</p>
+                </button>
+
+            </div>
+        </div>
+    </body>
+    <script src="/static/set_overview/link_buttons.js"></script>
+</html>

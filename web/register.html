@@ -1,0 +1,134 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>register - brainTrain</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/colorCss.css" rel="stylesheet">
+        <script src="/static/modules/imageclient.js"></script>
+
+        <style>
+
+         html {
+             transition: .5s;
+             opacity: 1;
+             background-repeat: no-repeat !important;
+             background-attachment: fixed !important;
+             background-position: center !important;
+             background-size: cover !important;
+             padding: 0;
+             margin: 0;
+         }
+         body {
+             align-items: center;
+             opacity: 1;
+             background-color: transparent;
+             width: 100%;
+             height: 100%;
+             background-color: rgba(0,0,0, 0.4);
+             padding: none;
+             margin: 0 !important;
+             position: absolute;
+             top: 0;
+             left: 0;
+             right: 0;
+             bottom: 0;
+             overflow: hidden;
+         }
+         #center {
+             display: flex;
+             align-content: center;
+             justify-content: center;
+         }
+         #window {
+             padding: 3rem;
+             background: rgba(1,1,1,.7);
+             margin: auto;
+             position: absolute;
+             top: 20%;
+         }
+
+         input {
+             position: relative;
+             top: -1em;
+             background-color: #00BCC7;
+             border: 3px solid #00BCC7;
+             transition-duration: .5s;
+             outline: none;
+         }
+         input:hover {
+             border-color: #90EEEB;
+         }
+         input:focus {
+             border-color: #29689E;
+         }
+         #failure {
+             display: none;
+             color: red;
+         }
+         #register-button {
+             outline: none;
+             background-color: #00BCC7;
+             border: 3px solid #00BCC7;
+             transition-duration: .5s;
+         }
+         #register-button:hover {
+             border: 3px solid #29989E;
+         }
+         h1, p, span {
+             color: #FFF;
+         }
+
+         #nav {
+             background-color: rgba(0, 0, 0, .5);
+             color: #AABCD2 !important;
+             display: flex;
+             align-items: center;
+             padding: .5rem;
+             border-radius: 1rem;
+             margin-top: .7rem;
+             margin-left: .5rem;
+             margin-right: .5rem;
+             margin-bottom: 1rem;
+
+             min-height: 31.6px;
+         }
+         .brand {
+             text-decoration: none;
+         }
+         .navconnector {
+             margin-left: 20px;
+             margin-right: 20px;
+             color: #AABCD2;
+         }
+         .navtext {
+             color: #AABCD2;
+         }
+        </style>
+    </head>
+    <body>
+        <div id="nav">
+            <a class="brand" style="font-size: .8rem;" href="/">brainTrain</a>
+            <span class="navconnector">→</span>
+            <span class="navtext">register</span>
+        </div>
+                <div id="center">
+            <div id="window">
+                <h1>REGISTER</h1>
+                <p><br></p>
+                <div style="padding: 0.1rem">
+                    <p>username</p>
+                    <input type="text" id="usernameFld" placeholder="username" name="username"  required>
+                </div>
+                <div style="padding: 0.1rem;">
+                    <p>password</p>
+                    <input type="password" id="passwordFld" placeholder="password" name="password" autocomplete="new-password" required>
+                </div>
+                <button id="register-button"><span>sign in</span></button>
+                <p id="failure">An error occured. <br>Please try again with <br> different credentials!</p>
+            </div>
+            <script src="/static/register.js"></script>
+        </div>
+    </body>
+</html>

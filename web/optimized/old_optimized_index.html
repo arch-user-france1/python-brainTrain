@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>brainTrain</title>
+        <link href="/static/customScrollbar.css" rel="stylesheet">
+        <link href="/static/fonts.css" rel="stylesheet">
+        <style>
+         html {
+             transition: .5s;
+             opacity: 1;
+             background: #121212 !important;
+             background-repeat: no-repeat;
+             background-size: cover;
+         }
+         body {
+             align-items: center;
+             opacity: 0;
+             background: #121212 !important;
+         }
+
+
+         .text {
+             color: white;
+             overflow: hidden;
+         }
+         #title {
+             font-size: 400%;
+             font-family: "Monospace", Lucida Console, serif;
+             color: #9A62AE;
+         }
+
+         .startButtons{
+             border: none;
+             padding: 1.3rem;
+             border-radius: 1em;
+             text-align: center;
+             display: inline-block;
+             color: #FF5CD9;
+             background-color: #5CF6FF;
+             border: 3px solid #4CAF50;
+             transition: all 0.6s;
+             -moz-transition: all 0.6s;
+             -webkit-transition: all 0.6s;
+             -ms-transition: all 0.6s;
+             -o-transition: all 0.6s;
+             opacity: 1;
+             position: absolute;
+             top: 25rem;
+             -ms-transform: translateY(-50%);
+             transform: translateY(-50%);
+         }
+         .startButtons span {
+             transition: 0.5s;
+         }
+         .startButtons span:after {
+             transition: all 1s;
+         }
+         .startButtons:hover{
+             /*background-color: #A89D9D;*/
+             /*background-image: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);*/
+             /*animation: gradient 10s ease infinite; /* doesn't seem to work */
+
+             background: linear-gradient(45deg, #002bff, #7a00ff, #ff00c8, #7a00ff, #002bff);
+             background-size: 200%;
+             animation: glowing 15s linear infinite;
+             border: 3px solid #2564CA;
+             /*border-image: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);*/
+             opacity: 1;
+             transform: scale(1.2);
+             z-index: 5;
+             transition-delay: 0.2s
+         }
+         .startButtons:hover span {
+             opacity: 1;
+             color: #9D0551;
+             padding: 5px;
+         }
+
+         @keyframes gradient {
+             0% {
+                 background-position: 0% 50%;
+             }
+             50% {
+                 background-position: 100% 50%;
+             }
+             100% {
+                 background-position: 0% 50%;
+             }
+         }
+
+
+         @keyframes glowing {
+             0% { background-position: 0 0; }
+             100% { background-position: 400% 0; }
+         }
+         @keyframes glowing-with-reverse {
+             0% { background-position: 0 0; }
+             50% { background-position: 400% 0; }
+             100% { background-position: 0 0; }
+         }
+         @keyframes textclip {
+             0% {background-position: 200% center;}
+             50% {background-position: 0% center;}
+         }
+
+         h1 {text-align: center;}
+         p {text-align: center; overflow: hidden;}
+         div {text-align: center; overflow: hidden;}
+
+         #experimentalbg {
+             padding: 1rem;
+             overflow: hidden;
+             /*
+                background: linear-gradient(45deg, #002bff, #7a00ff, #ff00c8, #7a00ff, #002bff);
+              */
+             background: linear-gradient(45deg, #1C1C1C, #2E2E2E, #1C1C1C);
+             background-size: 200%;
+             animation: glowing 60s linear infinite;
+             border: 3px solid #2564CA;
+             margin-bottom: 5rem;
+         }
+
+         #loginBtn {
+             position: fixed;
+             top: 2rem;
+             left: 0.5rem;
+             padding: 0.3rem;
+             background-size: 800%;
+         }
+         #registerBtn {
+             position: fixed;
+             top: 4.5rem;
+             left: 0.5rem;
+             padding: 0.3rem;
+             background-size: 800%;
+         }
+
+         #whatamI {
+             background-color: #1A1D28;
+         }
+         html {
+         }
+         @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+         p {
+             font-family: 'Montserrat', Helvetica, "Trebuchet MS", Verdana, sans-serif;
+         }
+        </style>
+    </head>
+    <body>
+        <h1 id="title">brainTrain</h1>
+        <div id="experimentalbg">
+            <!--<embed type="text/html" src="introduction">-->
+            <p style="font-family: 'Monospace', Lucida Console, serif; color: #2E3856;">brainTrain is a replacement for Quizlet.<br>
+                brainTrain is <strong>experimental</strong>. Expect bugs and missing features.
+            </p>
+        </div>
+
+        <div>
+            <button class="startButtons" id="loginBtn" onclick="location.href = '/login';"><span>login</span></button>
+            <button class="startButtons" id="registerBtn" onclick="location.href = '/register';"><span>register</span></button>
+        </div>
+        <script>
+         indexedDB.deleteDatabase('store')
+        </script>
+    </body>
+</html>

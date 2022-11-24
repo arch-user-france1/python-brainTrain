@@ -1,0 +1,155 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        {% include "main_html.html" %}
+
+        {% if edit %}
+        <title>edit - brainTrain</title>
+        <script src="/static/newset/edit.js" defer></script>
+        <script>var EDIT=true</script>
+        {% else %}
+        <title>new set - brainTrain</title>
+        <script>var EDIT=false</script>
+        {% endif %}
+        <style>
+         html {
+             background-color: #0A092D;
+         }
+         body {
+             padding-bottom: 50px;
+             opacity: 0;
+             transition: .2s;
+         }
+         object {
+             position: sticky;
+             left: 0rem;
+             right: 0rem;
+             width: 100%;
+         }
+         #space {
+             display: table;
+             margin: auto;
+         }
+         #window {
+             display: table-cell;
+             background-color: #5E6C92;
+             height: 100%;
+             width: 40rem;
+             align-items: center;
+             padding: 2rem;
+             border-radius: 0.1rem;
+             padding-bottom: 8rem;
+
+             transition-duration: 1s;
+             transition-delay: 0.4s;
+         }
+         .definitionsDiv {
+             display: flex;
+         }
+         .definitionsL, .definitionsR {
+             transition-duration: 0.5s;
+
+             width: 130%;
+             height: 120%;
+             border-radius: 0.2rem;
+             font-size: 1rem;
+             border: none;
+             padding: 4px;
+             background: transparent;
+             border-bottom: 3px solid black;
+             outline: none;
+             margin-bottom: 5rem;
+
+             min-height: 1rem;
+         }
+
+         .definitionsL:focus {
+             border-bottom: 3px solid orange;
+             color: black;
+         }
+         .definitionsR:focus {
+             border-bottom: 3px solid #79C662;
+             color: black;
+         }
+         .definitionsL {
+             margin-right: 10rem;
+         }
+         .definitionsR {
+         }
+
+         #donebtn {
+             position: relative;
+             bottom: 8rem;
+             font-size: 0.9rem;
+             background-color: transparent;
+             border: 3px solid #792791;
+             border-radius: 1rem;
+             width: 640px;
+             opacity: 0.5;
+             transition-delay: 0.2s;
+             transition-duration: 0.5s;
+         }
+         setOpt {
+             position: relative;
+             top: -5rem;
+         }
+         .setOptinput {
+             transition-duration: 1s;
+             position: relative;
+             top: -5rem;
+             background: transparent;
+             border: none;
+             border-bottom: 2px solid #FFF;
+             outline: none;
+             margin: 0.7rem;
+
+             min-width: 40rem;
+         }
+         .setOptinput:focus {
+             border-bottom: 2px solid orange;
+         }
+
+         #donebtn{
+             transition-duration: "1s"
+         }
+         #donebtntext {
+             transition-delay: "0.5s"
+             transition-duration: "1s"
+         }
+
+         ::-webkit-input-placeholder {
+             color: #373F55;
+         }
+
+        </style>
+    </head>
+    <body>
+        {% include "navigationbar.html" %}
+        <div id="space">
+            <div id="window">
+                {% if edit %}
+                <h1 style="padding-bottom: 8rem;" id="title">EDIT SET</h1>
+                {% else %}
+                <h1 style="padding-bottom: 8rem;" id="title">NEW SET</h1>
+                {% endif %}
+
+                <button id="donebtn"><p id="donebtntext" style="color: #792791">done</p></button>
+                <div id="setOpts">
+                    <div>
+                        <input autofocus id=setName class=setOptinput  placeholder="name">
+                    </div>
+                    <div><input class=setOptinput  placeholder="description"></div>
+                </div>
+                <div>
+                    <div class="definitionsDiv">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/static/newset/main.js"></script>
+    </body>
+</html>

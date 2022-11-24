@@ -1,0 +1,53 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>{{setName}} - brainTrain</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+         body {
+             background-color: #0A092D;
+         }
+         h1{text-align: center; color: white;}
+         #window {
+             padding: 2rem;
+             border-radius: 0.5rem;
+             background-color: #2E3856;
+             height: 370px;
+             width: 400px;
+             margin: auto;
+         }
+         #fieldDefinition {
+             min-height: 15.5rem;
+         }
+         #def1 {
+             font-size: 200%;
+             color: #3E9127;
+         }
+         center-container {
+             margin: auto;
+             width: 350px;
+             height: 200px;
+             /* Center child horizontally*/
+             display: flex;
+             /*justify-content: center;*/
+             align-content: center;
+         }
+        </style>
+    </head>
+    <body>
+        <div>
+            <h1 id="SetNameH" style="color: #76768F;">{{setName}}</h1>
+        </div>
+
+        <div class="center-container">
+            <div id="window" style="height: 400px; width: 800px;">
+                <div id="fieldDefinition">
+                    <p id="def1">{{definition1}}</p>
+                </div>
+                <p id="correctFld">{{correct}}</p>
+            </div>
+    </body>
+</html>

@@ -1,0 +1,32 @@
+#+title: Set Structure for clients
+#+description: How the set updater works - loading, updating from the browser
+
+
+* /set/<setName>/init
+** check if the set exists
+** reponse (JSON):
+*** {exists: True|False}
+
+* /set/<setName>/setData
+** get the set from the server
+** response (JSON):
+*** {exists: True|False, data: questions & answers, settings: ?}
+*** question => answer: the correct answer
+*** question => counters: [x, y] # x: correct answers, y: wrong answers
+*** question => version: int
+*** settings: settings not implemented yet
+
+* /set/<setName>/updateStatus
+** client POST request to update the set stats
+** request (JSON)
+*** {definitions: {counters: [x,y], version: int}}
+** response (JSON) success
+*** {successes[]: definitions, errors[]: [definition, reason], outdated{definitions: {counters, version}}: definitions, ignored: definitions, missing: {counters, version}}: definitions}
+*** error reasons
+**** notFoundInSet: question not in set
+**** notEqual:      same version but different content - these can also be found in outdated
+**** notEqual has been removed
+** response (JSON) nonexistent
+*** {exists: false}
+** response (JSON) nosession
+*** code 403

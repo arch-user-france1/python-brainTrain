@@ -1,0 +1,111 @@
+html {
+    min-height: 100%;
+    background-color: #0A092D;
+    background: linear-gradient(110deg, #0A092D 45%, #0A092D 80%, #2F0422) !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    opacity: 1;
+}
+body {
+    opacity: 0;
+    transition: .6s;
+    align-content: center;
+    background: transparent;
+}
+
+#win {
+    display: table;
+    align-content: center;
+    margin: 0 auto;
+}
+
+.settingsSection {
+    display: flex;
+    padding: 5%;
+    align-content: center;
+    align-items: center;
+    margin-right: .5%;
+}
+
+.settingsBoxTitle {
+    color: #FFF;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    margin-right: 10rem;
+}
+.settingsBoxIcon {
+    font-size: 3.4rem !important;
+    margin: auto !important;
+}
+.settingsBoxTitleTextDiv {
+    display: flex;
+    justify-content: center;
+    width: 15rem;
+}
+.settingsBoxTitleText {
+    font-size: 1.1rem;
+    display: flex;
+    vertical-align: middle;
+}
+
+.settingsBoxContent {
+    display: inline;
+    background-color: #2E3856;
+    border-radius: .25rem;
+    padding: 1rem;
+    width: 90%;
+    min-height: 5rem;
+
+    color: #FFF
+}
+
+h2 {
+    font-family: Ubuntu;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+    font-feature-settings: "kern","liga","clig","calt";
+    font-kerning: normal;
+    font-variant-ligatures: common-ligatures contextual;
+    padding-bottom: 8px;
+}
+p {
+    font-family: Ubuntu;
+}
+.buttons-toggle {
+    background-color: #1EC8C2;
+    outline: none;
+    border: none;
+    border-radius: .25rem;
+
+    transition: .2s;
+}
+.buttons-toggle:hover {
+    background-color: #68E8E4;
+}
+.fancy-rgb {
+    background-size: 200%;
+    background-image: linear-gradient(
+        -225deg,
+        #231557 0%,
+        #44107a 29%,
+        #ff1361 67%,
+        #fff800 100%
+    );
+    background-clip: border-box;
+    background-size: 200% auto;
+    color: #fff;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    animation: textclip 3s linear infinite;
+
+}
+@keyframes textclip {
+    0% {background-position: 200% center;}
+    100% {background-position: 0% center;}
+}

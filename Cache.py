@@ -75,9 +75,14 @@ class Cache():
         else:
             print(termcolor.colored("CACHE FILE_MISS:", "blue"), termcolor.colored(filepth,"red"))
             f = self._read_file(filepth, create=create)
+            if f == None:       # maybe forgot ".json"
+                f = self._read_file(filepth + ".json", create=create)
             if f == None: # don't cache file-not-found
-                print(termcolor.colored("FileNotFoundError (cache.file_read): "+filepth, "red"))
-                return None
+                if create:
+                    return {}
+                else:
+                    print(termcolor.colored("FileNotFoundError (cache.file_read): "+filepth, "red"))
+                    return None
             if self.write(filepth,f):
                 print(termcolor.colored("→   successfully added file to the cache", "cyan"))
             else:
@@ -86,7 +91,7 @@ class Cache():
 
     def file_write(self, filepth, data, remove_from_cache=False, immediate=None):
         """update a file if it's in the cache and save it to disk,
-        may be used for write-caching implementation sometime"""#
+        may be used for write-caching implementation sometime"""
         if isinstance(filepth, pathlib.PurePath):
             filepth = str(filepth.absolute())
 
@@ -134,7 +139,7 @@ class Cache():
                 f.write(data)
         else:
             with open(filepth, "w") as f:
-                f.write(data)
+                f.write(str(data))
 
 
     def management(self):

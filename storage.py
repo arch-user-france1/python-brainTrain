@@ -88,7 +88,7 @@ class Storage():
 
         # index shared across objects
         if storename in self.storeIndexes:
-            storeIndex = storeIndexes[storename]
+            storeIndex = self.storeIndexes[storename]
         else:
             storeIndex = self.cache.file_read(storedata["path"])
             self.storeIndexes[storename] = storeIndex
@@ -96,7 +96,7 @@ class Storage():
         return self.StoreObj(storedata["path"], storedata["folder"], self.cache, lock, storeIndex)
 
     def get_stores(self):
-        index = self.cache.file_read(self.path / "index")
+        index = self.cache.file_read(self.path / "index.json")
         stores = index
         stores_real = []
         for store in stores:

@@ -25,12 +25,12 @@ class iostream():
     def saveDictionary(self, dictionary: dict, fileName: str):
         import json
         if type(dictionary) == str and type(fileName == dict):
-            print("WARNING: SOMEONE SWAPPED dictionary AND filename IN iostream.saveDictionary!!!")
+            # print("WARNING: SOMEONE SWAPPED dictionary AND filename IN iostream.saveDictionary!!!")
             dictionary2 = str(dictionary)
             dictionary = dict(fileName)
             fileName = str(dictionary2)
             del dictionary2
-            print("swap should be fixed, please find the wrong codeline and correct it")
+            # print("swap should be fixed, please find the wrong codeline and correct it")
 
 
         if fileName.endswith(".json"):

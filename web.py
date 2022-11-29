@@ -15,6 +15,7 @@ import socket
 import shutil
 
 import flask
+import werkzeug
 import logging
 import threading
 import queue
@@ -31,8 +32,7 @@ from Cache import Cache
 
 firewall = firewall.module(max_stress=1000)
 app = flask.Flask(__name__, template_folder="web")
-app.secret_key = os.urandom(100).hex() # don't leak key
-#app.secret_key = '----'
+app.secret_key = '-----'
 app.config['SESSION_COOKIE_SAMESITE'] = "Strict"
 
 
@@ -45,13 +45,17 @@ dtpth = "data/" # path where data is stored
 FILES_SET = ['set.json', 'data.json', 'settings.json'] # json files for new sets (see eg. create_set)
 
 
-# database
-# store for users + settings
-userdb = storage.Storage(pathlib.Path("brainTrain-users"), "users")
+###  Database Setup  ###
+# store for users
+userdb = storage.Storage(pathlib.Path(dtpth + "brainTrain-users"), "users")
 # store for sets (store [user] => setname)
-setdb = storage.Storage(pathlib.Path("brainTrain-sets"), "sets")
-# store for caching etc.
-diskcache = storage.Storage(pathlib.Path("brainTrain-cache"), "diskcache")
+setdb = storage.Storage(pathlib.Path(dtpth + "brainTrain-sets"), "sets")
+# store for settings (sets)
+settingsdb = storage.Storage(pathlib.Path(dtpth + "brainTrain-users"), "settings")
+# store for folders
+folderdb = storage.Storage(pathlib.Path(dtpth + "brainTrain-folders"), "folders")
+# store for caching (unused)
+diskcache = storage.Storage(pathlib.Path(dtpth + "brainTrain-cache"), "diskcache")
 
 
 class ImageOfTime():
@@ -72,8 +76,12 @@ class ImageOfTime():
     def _thread(self):
         self.version = 0
         while True:
-            self.image_path = self.path + random.choice(self.images)
+            self.image_name = random.choice(self.images)
+            self.image_path = self.path + self.image_name
             self.image = open(self.image_path, "rb")
+            self.last_modified = time.ctime()
+            self.last_modified_unix = time.time()
+            self.if_modified_since = time.ctime(self.last_modified_unix+30)
             self.version += 1
 
             time.sleep(self.interval)
@@ -177,6 +185,7 @@ def save_client():
     cache.file_write(dtpth+"client.json", client, immediate=True)
 
 def get_userstorage(username):
+    raise DeprecationWarning("get_userstorage used")
     return dtpth + username + "/"
 
 def check_session(flask_session, client=client, functionName=None):
@@ -225,12 +234,14 @@ def create_set(setName, setWords, userName):
             if word not in new:
                 new[word] = {"counters": [0,0], "answer": setWords[word], "version": 0}
 
-        setstore.put(setName, new)
     else:
+        settingsdb.open_store(userName).put(setName, {})
+
         new = {}
         for word in setWords:
             new[word] = {"counters": [0,0], "answer": setWords[word], "version": 0}
 
+    setstore.put(setName, new)
 
 
 def delete_set(setName, username):
@@ -243,47 +254,45 @@ def delete_set(setName, username):
         return True
     else:
         return False
-    
-def check_set(setName, username):
-    userstoragecards = get_userstorage(username) + "cards.json"
-    cards = cache.file_read(userstoragecards)
 
-    if setName in cards['names']:
+
+def check_set(setName, username):
+    setstore = setdb.open_store(username)
+    all_sets = setstore.get_entries()
+
+    if setName in all_sets:
         return True
     else:
         return False
 
 
 def load_set(setName, username):
-    setpth = get_userstorage(username) + setName + "/"
-    setData = {}
-    for filename in FILES_SET:
-        setData[filename] = cache.file_read(setpth + filename)
-
+    setstore = setdb.open_store(username)
     response = {}
-    response['data'] = {}
-    response['settings'] = {}
-    for i in setData["set.json"]:
-        if 'version' not in setData["data.json"][i]:
-            setData["data.json"][i]['version'] = 0
-            cache.file_write(setpth+"data.json", setData["data.json"])
+    response["data"] = {}
+    response["settings"] = {}
 
-        response['data'][i] = {}
-        response['data'][i]['answer'] = setData["set.json"][i]
-        response['data'][i]['counters'] = setData["data.json"][i]['counters']
+    setData = setstore.get(setName)["data"]
+    python_print(setData)
+    for question in setData:
+        response["data"][question] = setData[question]
 
-        response['data'][i]['version'] = setData["data.json"][i]['version']
+        #response["data"][question]["answer"] = setData[question]["answer"]
+        #response["data"][question]["counters"] = setData[question]["counters"]
+        #response["data"][question]["version"] = setData[question]["version"]
+
 
     return response
+
 
 
 VALID_SET_SETTINGS = ["stopaskingpercentage"]
 SET_DEFAULT_VALUES = {"stopaskingpercentage": 95}
 
 def set_settings_change(setName: str, settings_change: dict, username: str):
-    setpth = get_userstorage(username) + setName + "/"
-    settingspth = setpth + "settings.json"
-    settingsdata = cache.file_read(settingspth)
+    store = settingsdb.open_store(username)
+    settingsdata = store.get(setName)
+
 
     failed = []
     successed = []
@@ -299,25 +308,24 @@ def set_settings_change(setName: str, settings_change: dict, username: str):
         changed_time = time.time()
         history = settingsdata[settingname]["history"]
         history.append(new_value)
-        if len(history) > 25:  # don't keep more than 25
+        if len(history) > 25:
             del history[0]
         settingsdata[settingname] = {"value": new_value,
                                      "changed_date": changed_time,
                                      "history": history}
         successed.append(settingname)
     #
-    cache.file_write(settingspth, settingsdata)
+    store.put(setName, settingsdata)
     return successed, failed
 
 
 def set_settings_get(setName: str, settings_get: list, username: str):
-    setpth = get_userstorage(username) + setName + "/"
-    settingspth = setpth + "settings.json"
-    settingsdata = cache.file_read(settingspth)
+    store = settingsdb.open_store(username)
+    settingsdata = store.get(setName)
+
 
     failed = []
     successed = {}
-
     for settingname in settings_get:
         if settingname not in settingsdata:
             if settingname in VALID_SET_SETTINGS:
@@ -350,69 +358,63 @@ def set_settings_valid_value(setting: str, value):
 
 
 def set_update(setName: str, definitions: dict, username: str):
-    userstorage = get_userstorage(username)
-    setpath = userstorage + setName + "/"
-    dataJson = cache.file_read(setpath + "data.json")
-    setJson = cache.file_read(setpath + "set.json")
+    setstore = setdb.open_store(username)
+    setData = setstore.get(setName)
+
 
     errors = []
     successes = []
     ignored = []
     outdated = {}
     missing = {}
-
     total = []
     for definition in definitions:
         counters = definitions[definition]['counters']
         version = definitions[definition]['version']
         answer = definitions[definition]['answer']
 
-        if definition in dataJson:
+        if definition in setData:
             total.append(definition)
-            if answer != setJson[definition]:  # if the answers are not similar
+            if answer != setData[definition]["answer"]:  # if the answers are not similar it's outdated
                 outdated[definition] = {}
-                outdated[definition]['counters'] = dataJson[definition]['counters']
-                outdated[definition]['version'] = dataJson[definition]['version']
-                outdated[definition]['answer'] = setJson[definition]
+                outdated[definition]['counters'] = setData[definition]['counters']
+                outdated[definition]['version'] = setData[definition]['version']
+                outdated[definition]['answer'] = setData[definition]["answer"]
             else:
-                if dataJson[definition]['version'] <= version:  # if the version is higher or the same
-                    dataJson[definition]['counters'][0] = counters[0]
-                    dataJson[definition]['counters'][1] = counters[1]
+                if setData[definition]['version'] <= version:  # if the version is greater or equal it's newer
+                    setData[definition]['counters'][0] = counters[0]
+                    setData[definition]['counters'][1] = counters[1]
 
-                    dataJson[definition]['version'] = version + 1
+                    setData[definition]['version'] = version + 1
                     successes.append(definition)
-                else:  # if it is lower
+                else:  # if the version is less it's outdated
                     outdated[definition] = {}
-                    outdated[definition]['counters'] = dataJson[definition]['counters']
-                    outdated[definition]['version'] = dataJson[definition]['version']
-                    outdated[definition]['answer'] = setJson[definition]
-        else:  # if the question could not be found
+                    outdated[definition]['counters'] = setData[definition]['counters']
+                    outdated[definition]['version'] = setData[definition]['version']
+                    outdated[definition]['answer'] = setData[definition]["answer"]
+        else:  # if the question could not be found, tell the client
             errors.append([definition, "notFoundInSet"])
 
     for definition in dataJson:
         if definition not in total:
             missing[definition] = {}
-            missing[definition]['counters'] = dataJson[definition]['counters']
-            missing[definition]['version'] = dataJson[definition]['version']
-            missing[definition]['answer'] = setJson[definition]
+            missing[definition]['counters'] = setData[definition]['counters']
+            missing[definition]['version'] = setData[definition]['version']
+            missing[definition]['answer'] = setData[definition]["answer"]
 
 
     print(termcolor.colored(f"SYNCHRONISATION SUMMARY: updated: {len(successes)} outdated: {len(outdated)} ignored: {len(ignored)} failed: {len(errors)} missing: {len(missing)} ", "cyan"))
 
-    cache.file_write(setpath + "data.json", dataJson)
+    setstore.put(setName, setData)
     return {'successes': successes, 'errors': errors, 'outdated': outdated, 'ignored': ignored, 'missing': missing}
 
 
-def set_update_time(setName, access_time, username):
-    filepth = get_userstorage(username) + "cards.json"
-    cards = cache.file_read(filepth)
+def set_update_time(setName, access_time, username): # removed
+    pass
 
-    if "lastAccessed" not in cards:
-        cards["lastAccessed"] = {}
-    cards['lastAccessed'][setName] = access_time
-    cache.file_write(filepth, cards)
 
-def get_setting(key):
+def get_setting_REMOVE(key):
+    """ removal pending """
     username = flask.session['username']
     userstorage = get_userstorage(username)
     settings = cache.file_read(userstorage + "settings.json", create=True)
@@ -424,15 +426,39 @@ def get_setting(key):
             settings["autosync"] = False
             cache.file_write(userstorage+"settings.json", settings)
             return False
+def get_setting(key):
+    if not check_session(flask.session):
+        return flask.Response(status=401)
+
+    username = flask.session["username"]
+    store = userdb.open_store(username)
+    settings = store.get("settings")
+
+
+    if key in settings:
+        return settings[key]
+    else:
+        if key == "autosync":
+            settings["autosync"] = False
+            store.put("settings", settings)
+            return False
+
 
 
 def change_settings(data: dict):
+    if not check_session(flask.session):
+        return flask.Response(status=401)
     if firewall.check(get_ip()):
         return on_banned()
+    else:
+        firewall.trigger(get_ip(), 1)
+
 
     username = flask.session['username']
     userstorage = get_userstorage(username)
     settings = cache.file_read(userstorage + "settings.json", create=True)
+    store = userdb.open_store(username)
+    settings = store.get("settings")
 
     success = []
     error = {}
@@ -457,7 +483,7 @@ def change_settings(data: dict):
 
 
 
-    cache.file_write(userstorage + "settings.json", settings)
+    store.put("settings", settings)
     print(termcolor.colored("SETTINGS change: ", "blue"), termcolor.colored(str(username), "cyan"))
     print(termcolor.colored(f"→  successes: {len(success)}, errors: {len(error)}"+str(username),"cyan"))
     return {'success': success, 'error': error}
@@ -548,7 +574,7 @@ def initialize(setName=None):
             flask.session['id'] = clientNumber
             sessid = flask.session['id']
         else:
-            print(termcolor.colored("OMG NUMBER EXISTS ALREADY","red"))
+            print(termcolor.colored("OMG ID EXISTS ALREADY","red"))
             time.sleep(0.5)
 
 
@@ -634,6 +660,10 @@ def set_shared_clone(username, username_sharer, setname):
     return True
 
 
+class NotModified(werkzeug.exceptions.HTTPException):
+    code = 304
+    def get_response(self, environment):
+        return flask.Response(status=304)
 
 @app.route("/checksession")
 def flaskCheckSession():
@@ -649,10 +679,23 @@ def flaskIndex723645987():
 
 @app.route("/imageofthetime.webp")
 def flaskimageoftime():
+    etag = image_index.image_name
+
+    if "If-None-Match" in flask.request.headers and 'W/"'+etag+'"' in flask.request.headers["If-None-Match"]:
+        raise NotModified
+
+
     image = open(image_index.image_path, "rb")
-    return flask.send_file(
+    resp = flask.send_file(
         image,
         mimetype="image/webp")
+
+    #resp.headers["Cache-Control"] = "must-revalidate"
+    resp.set_etag(image_index.image_name, weak=True)
+    resp.headers["If-Match"] = image_index.image_name
+    resp.headers["Last-Modified"] = image_index.last_modified
+    resp.headers["If-Modified-Since"] = image_index.if_modified_since
+    return resp
 
 @app.route("/imageofthetime-version")
 def flask092183091283098123098123098():
@@ -695,15 +738,11 @@ def serveSetList():
 
     username = flask.session['username']
 
-    userstorage = get_userstorage(username)
-    cardsPath = userstorage + "cards.json"
-    cards = cache.file_read(cardsPath)
+    defaultSets = setdb.open_store(username).get_entries()
 
-    defaultSets = cards['names']
-    clonedSets = cache.file_read(userstorage + "clonedsets.json")
-
-    return flask.make_response({'defaultSets': defaultSets,
-                                'clonedSets': clonedSets})
+    # shared sets later
+    # last sets?
+    return flask.make_response({'defaultSets': defaultSets})
 
 @app.route("/favicon.ico")
 def serveFavicon():
@@ -729,7 +768,7 @@ def serveRegisterJs():
     return flask.send_file("web/register.js")
 @app.route("/logout")
 def logout():
-    print(termcolor.colored(f"LOGOUT: {len(client)} users were logged in before", "cyan"))
+    print(termcolor.colored(f"LOGOUT: {len(client)} users were logged in", "cyan"))
     def delCookies():
         resp = flask.redirect("/")
         for cookie in flask.request.headers.getlist('Cookie'):
@@ -753,8 +792,9 @@ def login_post():
     json = flask.request.get_json(cache=False)
     username = json["username"]
     print(termcolor.colored("LOGIN new_login: "+str(username), "cyan"))
-    password = json["password"]
+    password = json["password"].encode("utf-8")
 
+    python_print(usernames)
     if username not in usernames:
         firewall.trigger(get_ip(), 1)
         del password
@@ -762,9 +802,18 @@ def login_post():
         print(termcolor.colored("LOGIN wrong_username: "+str(username), "cyan"))
         return req
 
-    if bcrypt.checkpw \
-    (password.encode('utf-8'),
-     bytes(base64.b64decode(bytes.fromhex(usernames[username]["hash"])))):
+    userdata = userdb.open_store(username)
+
+    credentials = userdata.get("credentials")["data"]
+    real_hash = credentials["hash"].encode("utf8")
+    #salt = credentials["salt"].encode("utf8")
+
+    #password_hash = bcrypt.hashpw(password, salt)
+    #python_print(password_hash, real_hash)
+
+    if bcrypt.checkpw(password, # entered password
+                      real_hash): # stored hash
+        # password equal
         del password
 
         initialize()
@@ -793,7 +842,6 @@ def register_post():
     if firewall.check(get_ip()):
         return on_banned()
 
-    #usernames = iostr.openDictionary("users", create=True)
     usernames = userdb.get_stores()
     json = flask.request.get_json(cache=False)
     username = json['username']
@@ -809,11 +857,13 @@ def register_post():
     # encode password and generate salt
     passwordEncoded = password.encode('utf-8')
     salt = (bcrypt.gensalt(14))
+    password_hash = bcrypt.hashpw(password.encode("utf-8"), salt)
 
     # save data
     userdb.new_store(username)
     userdata = userdb.open_store(username)
-    userdata.add("credentials", {"salt": base64.b64encode(salt).hex(), "hash": base64.b64encode(bcrypt.hashpw(password.encode('utf-8'), salt)).hex()})
+    #userdata.add("credentials", {"salt": base64.b64encode(salt).hex(), "hash": base64.b64encode(bcrypt.hashpw(password.encode('utf-8'), salt)).hex()})
+    userdata.add("credentials", {"salt": salt.decode("utf8"), "hash": password_hash.decode("utf8")})
     userdata.add("registerTime", time.time())
     userdata.add("settings", {})
     setdb.new_store(username)
@@ -974,12 +1024,13 @@ def uploads(name):
 
 
     if flask.request.method == "POST":
-        if 'id' in flask.session:
+        if 'id' in flask.session:               # refactor to use new functions; code readability  TODO
             if flask.session['id'] in client:
                 sessid = flask.session['id']
                 username = flask.session['username']
-                userstorage = get_userstorage(username)
-                cards = cache.file_read(userstorage + "cards.json")['names']
+
+                userstore = setdb.open_store(username)
+                cards = setdb.get_stores()
 
                 jsn = flask.request.get_json()
 

@@ -1,0 +1,1 @@
+/home/france1/PycharmProjects/pythonVociTrainer/GitHub/brainTrain/main.py
